@@ -1,24 +1,27 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 
 #include "CPPMyActor.h"
 
-// Sets default values
+
 ACPPMyActor::ACPPMyActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	SetRootComponent(Mesh);
 
+	 InitialLocation = GetActorLocation();
+
 }
 
-// Called when the game starts or when spawned
+
 void ACPPMyActor::BeginPlay()
 {
 	Super::BeginPlay();
-	ShowActorInformation();
+
+	InitialLocation = GetActorLocation();
 	
 }
 
@@ -32,10 +35,21 @@ void ACPPMyActor::ShowActorInformation() {
 
 }
 
-// Called every frame
+
 void ACPPMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ACPPMyActor::SinMovement()
+{
+	float Time = GetWorld()->GetTimeSeconds();
+
+	float NewZ = InitialLocation.Z + FMath::Sin(Frequency * Time) * Amplitude;
+
+	FVector NewLocation = GetActorLocation();
+	NewLocation.Z = NewZ;
+	SetActorLocation(NewLocation);
 }
 
