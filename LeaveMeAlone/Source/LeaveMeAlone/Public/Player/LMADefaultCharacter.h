@@ -8,6 +8,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class ULMAHealthComponent;
+class UAnimMontage;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -45,12 +47,36 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Settings")
 	float ZoomInterpSpeed = 8.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
+
+	UFUNCTION()
+	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sprint")
+	float MinStamina = 0.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sprint")
+	float MaxStamina = 100.0f;
+
+
+	
+	UFUNCTION()
+	float GetCurrentStamina() { return CurrentStamina; };
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
 	float CurrentZoomDistance;
+
+	float CurrentStamina;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	ULMAHealthComponent* HealthComponent;
+
+	bool CanSprint = false;
 
 
 public:	
@@ -67,11 +93,25 @@ private:
 
 	float FOV = 55.0f;
 
+	float DefaultMaxWalkSpeed = 0.0f;
+
+
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
 
 	void HandleCameraZoom(float Value);
 
+	void OnDeath();
+
+	void RotationPlayerOnCursor();
+
+	void OnHealthChanged(float NewHealth);
+
+	void UpdateStamina(float Value);
+
+	void StartSprint();
+	
+	void StopSprint();
 
 };
