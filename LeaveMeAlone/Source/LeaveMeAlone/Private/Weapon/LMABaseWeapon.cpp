@@ -36,7 +36,7 @@ void ALMABaseWeapon::Fire()
 	Shoot();
 }
 
-void ALMABaseWeapon::StopFire()
+void ALMABaseWeapon::StopShooting()
 {
 	IsFiring = false;
 }
@@ -89,7 +89,7 @@ void ALMABaseWeapon::DecrementBullets()
 	}
 	
 	CurrentAmmoWeapon.Bullets--;
-	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
+	
 	if (IsCurrentClipEmpty())
 	{
 		OnClipEmpty.Broadcast(true);

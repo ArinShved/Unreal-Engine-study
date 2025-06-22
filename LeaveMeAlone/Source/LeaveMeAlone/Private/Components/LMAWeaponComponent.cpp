@@ -88,7 +88,7 @@ void ULMAWeaponComponent::Reload()
 
 void ULMAWeaponComponent::StopFire() 
 {
-	Weapon->StopFire();
+	Weapon->StopShooting();
 	GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
 }
 
@@ -123,4 +123,15 @@ void ULMAWeaponComponent::PerformReload()
 	AnimReloading = true;
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	Character->PlayAnimMontage(ReloadMontage);
+}
+
+
+bool ULMAWeaponComponent::GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const
+{
+	if (Weapon)
+	{
+		AmmoWeapon = Weapon->GetCurrentAmmoWeapon();
+		return true;
+	}
+	return false;
 }

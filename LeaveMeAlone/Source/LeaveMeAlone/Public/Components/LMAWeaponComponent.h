@@ -24,6 +24,7 @@ public:
 
 	void StartFire();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void StopFire();
 
 	void Reload();
@@ -43,6 +44,9 @@ public:
 	void OnClipEmptyCallback(bool IsAvtoReload);
 
 	void PerformReload();
+
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
 	
 
 protected:

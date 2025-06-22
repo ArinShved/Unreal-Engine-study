@@ -31,7 +31,8 @@ public:
 
 	void Fire();
 
-	void StopFire();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void StopShooting();
 
 	void ChangeClip();
 
@@ -48,6 +49,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FAmmoWeapon AmmoWeapon{30, 0, true};
 
+	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
+
 
 protected:
 
@@ -63,8 +66,8 @@ protected:
 
 	void Shoot();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsFiring = false;
-	
 	
 
 public:	
