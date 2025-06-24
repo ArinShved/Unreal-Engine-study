@@ -8,6 +8,10 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmpty, bool)
 
+class USoundWave;
+class UNiagaraSystem;
+
+
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
 {
@@ -50,6 +54,17 @@ public:
 	FAmmoWeapon AmmoWeapon{30, 0, true};
 
 	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	USoundWave* ShootWave;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	UNiagaraSystem* TraceEffect;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	FString TraceName = "Tracer";
+
+	void SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd);
 
 
 protected:
